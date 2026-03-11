@@ -73,7 +73,8 @@ module.exports = async function handler(req, res) {
     const data = await response.json();
 
     if (data.error) {
-      return res.status(500).json({ reply: "I'm having a moment — please try again! 😅" });
+      console.error('Anthropic error:', JSON.stringify(data.error));
+      return res.status(500).json({ reply: data.error.message || "I'm having a moment — please try again! 😅" });
     }
 
     const reply = data.content?.[0]?.text || "Sorry, I couldn't respond. Please try again!";
